@@ -1,4 +1,5 @@
 import numpy as np
+import time
 from kNN.kNN import kNN
 
 train = np.loadtxt(r'./data/MNIST_train_small.csv', 
@@ -7,13 +8,12 @@ test = np.loadtxt(r'./data/MNIST_test_small.csv',
     delimiter=',')
 
 X_train, y_train = train[:,1:], train[:,0]
-
-
-# TODO: Remove subset the train
-X_train, y_train = X_train[:100],  y_train[:100]
-
-
 X_test, y_test = test[:,1:], test[:,0]
 
+start = time.process_time()
 cls = kNN(X=X_train, y=y_train)
-cls.predict(X_test[1], y_test[1])
+y_hat = cls.predict(X_test)
+print("processing time: %.2f seconds" % (time.process_time() - start))
+
+# print(np.isnan(y_hat))
+# print(y_hat)

@@ -1,5 +1,4 @@
 import numpy as np
-from kNN.distance import euclidian
 
 class kNN:
 
@@ -9,39 +8,72 @@ class kNN:
         self.y = y
         self.n_classes = len(list(set(self.y)))
 
-    def evaluate(self, X_test, y_test, k=5, d=euclidian):
+    def predict(self, X_input, k_range=range(1, 21), dist="euclidian"):
+        y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
-        # TODO: Same as predict but iterating over test set
+        for i in range(0, len(X_input)):
+            distances = self.distance(X_input[i], dist)
+
+            # Order distance by closest elements
+            neighbors = sorted(distances, key=lambda x: x[0])
+
+            for k in k_range:
+                k_neighbors = neighbors[:k]
+                y_hat[i][k-1] = self.__majority_vote(k_neighbors)
+
+        return y_hat
+
+    def distance(self, x, dist):
+        # TODO: Add more distance measures
+        if dist == "euclidian":
+            return self.euclidian(x)
+
+    def euclidian(self, x):
+        '''Euclidian distance
+        '''
+        distances = np.sqrt(np.sum(np.power(
+            np.subtract(x, self.X), 2), axis=1))
+        return np.stack((distances, self.y), axis=-1)
+
+
+    def manhattan(self, X, Y):
+        '''
+        Manhattan distance
+        https://en.wikipedia.org/wiki/Taxicab_geometry
+        '''
+        return np.sum(np.abs(X-Y))
+
+    def cosine(self, X, Y):
+        '''
+        Cosine similarity
+        https://en.wikipedia.org/wiki/Cosine_similarity
+        '''
         pass
 
-    def predict(self, X_j, y_j, k=5, dist=euclidian):
-        distances = {}
+    def mahalanobis(self, X, Y):
+        '''
+        Mahalanobis distance
+        https://en.wikipedia.org/wiki/Mahalanobis_distance
+        '''
+        pass
 
-        for i in range(0, len(self.X)):
-            di = 0
-            for x, y in zip(self.X[i], X_j):
-                di += dist(X=x, Y=y)
-            distances[i] = (di, int(self.y[i]))
-
-        distances = sorted(distances.items(), key=lambda x: x[1])
-
-        # Look at the k neighbors
-        distances = distances[:k]
-
-        # Majority vote on X_j
-        return self.__majority_vote(distances)
+    def chebyshev(self, X, Y):
+        '''
+        Chebyshev distance
+        https://iq.opengenus.org/chebyshev-distance/
+        '''
+        pass
 
     def __majority_vote(self, neighbors):
+        '''Majority vote for the k nearest neighbors chosen
+        '''
         votes = [0] * self.n_classes
-        
         for n in neighbors:
-            votes[n[1][1]] += 1
+            votes[int(n[1])] += 1
         
-        # TODO: Takes first occurence if even numbers
-        return votes.index(max(votes))
+        # Indices which have the same vote
+        indices = np.argwhere(votes == np.amax(votes)).flatten().tolist()
 
-
-
-
-
-
+        for n in neighbors:
+            if int(n[1]) in indices:
+                return n[1]
