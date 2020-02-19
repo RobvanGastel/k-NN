@@ -15,5 +15,5 @@ cls = kNN(X=X_train, y=y_train)
 y_hat = cls.predict(X_test)
 print("processing time: %.2f seconds" % (time.process_time() - start))
 
-# print(np.isnan(y_hat))
-# print(y_hat)
+for i in range(0, 20):
+    print("0/1 loss: ", np.sum(y_hat[:, i] != y_test), "for k: ", i)
