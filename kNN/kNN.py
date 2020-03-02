@@ -8,7 +8,7 @@ class kNN:
         self.y = y
         self.n_classes = len(list(set(self.y)))
 
-    def predict(self, X_input, k_range=range(1, 21), dist="euclidian"):
+    def predict(self, X_input, k_range=range(1, 21), dist="minkowski"):
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
         for i in range(0, len(X_input)):
@@ -27,6 +27,8 @@ class kNN:
         # TODO: Add more distance measures
         if dist == "euclidian":
             return self.euclidian(x)
+        if dist == "minkowski":
+            return self.minkowski(x)
 
     def euclidian(self, x):
         '''Euclidian distance
@@ -57,6 +59,12 @@ class kNN:
         '''
         pass
 
+    
+    def minkowski(self, x, p=5):
+        distances = np.power(np.sum(np.power(
+            np.abs(np.subtract(x, self.X)), p), axis=1), 1/p)
+        return np.stack((distances, self.y), axis=-1)
+    
     def chebyshev(self, X, Y):
         '''
         Chebyshev distance
