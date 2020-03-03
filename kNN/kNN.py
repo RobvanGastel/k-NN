@@ -8,7 +8,7 @@ class kNN:
         self.y = y
         self.n_classes = len(list(set(self.y)))
 
-    def predict(self, X_input, k_range=range(1, 21), dist="minkowski"):
+    def predict(self, X_input, k_range=range(1, 21), dist):
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
         for i in range(0, len(X_input)):
