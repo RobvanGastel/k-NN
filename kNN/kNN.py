@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 from time import process_time
 
 class kNN:
@@ -15,7 +16,7 @@ class kNN:
         start_predict = process_time()
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
-        for i, x_input in enumerate(X_input):
+        for i, x_input in enumerate(tqdm(X_input)):
             distances = self.get_distance(x_input, dist, kwargs=kwargs)
             # Order distance by closest elements
             neighbors = sorted(distances, key=lambda x: x[0])
@@ -23,12 +24,8 @@ class kNN:
             for k in k_range:
                 k_neighbors = neighbors[int(LOOCV) : k + int(LOOCV)]
                 y_hat[i][k-1] = self.__majority_vote(k_neighbors)
-            
-            if i % 10 == 0:
-                print(f'{i}/{len(X_input)}', end='\r')
 
         print("predict processing time: %.2f seconds" % (process_time() - start_predict))
-
         return y_hat
 
     def get_distance(self, x, dist, **kwargs):
@@ -62,7 +59,7 @@ class kNN:
         q1 = x-self.X
         q2 = np.abs(q1)
         distances = np.sum(q2, axis=1)
-        print(f'  distances.shape {distances.shape}  self.y.shape {self.y.shape}')
+        # print(f'  distances.shape {distances.shape}  self.y.shape {self.y.shape}')
         return np.stack((distances, self.y), axis=-1)
 
     def cosine(self, x):
