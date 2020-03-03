@@ -4,15 +4,16 @@ from kNN.kNN import kNN
 start = time.process_time()
 
 train = np.loadtxt(r'./data/MNIST_train_small.csv', 
-    delimiter=',')[:250]
+    delimiter=',')#[:250]
 test = np.loadtxt(r'./data/MNIST_test_small.csv', 
-    delimiter=',')[:50]
+    delimiter=',')#[:50]
+print(f'train shape {train.shape}\ntest shape {test.shape}')
 
 X_train, y_train = train[:,1:], train[:,0]
 X_test, y_test = test[:,1:], test[:,0]
 
 cls = kNN(X=X_train, y=y_train)
-y_hat = cls.predict(X_test, 'euclidian')
+y_hat = cls.predict(X_test, 'manhattan')
 
 for i in range(0, 20):
     print("0/1 loss: ", np.sum(y_hat[:, i] != y_test), "for k: ", i+1)

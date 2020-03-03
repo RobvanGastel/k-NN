@@ -1,0 +1,21 @@
+0/1 loss:  97 for k:  1
+0/1 loss:  97 for k:  2
+0/1 loss:  89 for k:  3
+0/1 loss:  85 for k:  4
+0/1 loss:  90 for k:  5
+0/1 loss:  83 for k:  6
+0/1 loss:  91 for k:  7
+0/1 loss:  90 for k:  8
+0/1 loss:  93 for k:  9
+0/1 loss:  98 for k:  10
+0/1 loss:  103 for k:  11
+0/1 loss:  107 for k:  12
+0/1 loss:  114 for k:  13
+0/1 loss:  114 for k:  14
+0/1 loss:  117 for k:  15
+0/1 loss:  116 for k:  16
+0/1 loss:  118 for k:  17
+0/1 loss:  119 for k:  18
+0/1 loss:  118 for k:  19
+0/1 loss:  124 for k:  20
+processing time: 29.66 seconds

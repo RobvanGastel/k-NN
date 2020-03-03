@@ -7,8 +7,9 @@ class kNN:
         self.X = X
         self.y = y
         self.n_classes = len(list(set(self.y)))
+        self.cov_matrix = None
 
-    def predict(self, X_input, dist, k_range=range(1, 21)):
+    def predict(self, X_input, dist, k_range=range(1, 21), predict_on_train=False):
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
         for i, x_input in enumerate(X_input):
@@ -18,7 +19,7 @@ class kNN:
             neighbors = sorted(distances, key=lambda x: x[0])
 
             for k in k_range:
-                k_neighbors = neighbors[:k]
+                k_neighbors = neighbors[int(predict_on_train) : k + int(predict_on_train)]
                 y_hat[i][k-1] = self.__majority_vote(k_neighbors)
 
         return y_hat
@@ -31,6 +32,10 @@ class kNN:
             return self.minkowski(x)
         if dist == "cosine":
             return self.cosine(x)
+        if dist == 'manhattan':
+            return self.manhattan(x)
+        if dist == "mahalanobis":
+            return self.mahalanobis(x)
 
     def euclidian(self, x):
         '''Euclidian distance
@@ -40,19 +45,23 @@ class kNN:
         return np.stack((distances, self.y), axis=-1)
 
 
-    def manhattan(self, X, Y):
+    def manhattan(self, x):
         '''
         Manhattan distance
         https://en.wikipedia.org/wiki/Taxicab_geometry
         '''
-        return np.sum(np.abs(X-Y))
+        q1 = x-self.X
+        q2 = np.abs(q1)
+        q3 = np.sum(q2, axis=1)
+        distances = q3
+        return np.stack((distances, self.y), axis=-1)
 
     def cosine(self, x):
         distances = np.divide(np.sum(np.multiply(x, self.X), axis=1),
                               np.sqrt(np.multiply(np.sum(np.power(x, 2), axis=1), np.sum(np.power(self.X, 2), axis=1))))
         return np.stack((distances, self.y), axis=-1)
 
-    def mahalanobis(self, X, Y):
+    def mahalanobis(self, x):
         '''
         Mahalanobis distance
         https://en.wikipedia.org/wiki/Mahalanobis_distance
