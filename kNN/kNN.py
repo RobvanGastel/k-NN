@@ -8,15 +8,15 @@ class kNN:
         self.X = X
         self.y = y
         self.n_classes = len(list(set(self.y)))
-        self.cov_matrix = None
+        self.cov_matrix_inv = None
 
-    def predict(self, X_input, dist, k_range=range(1, 21), LOOCV=False):
+    def predict(self, X_input, dist, k_range=range(1, 21), LOOCV=False, **kwargs):
         print(f'start predict {dist}')
         start_predict = process_time()
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
         for i, x_input in enumerate(X_input):
-            distances = self.distance(x_input, dist)
+            distances = self.get_distance(x_input, dist, kwargs=kwargs)
             # Order distance by closest elements
             neighbors = sorted(distances, key=lambda x: x[0])
 
@@ -31,11 +31,13 @@ class kNN:
 
         return y_hat
 
-    def distance(self, x, dist):
+    def get_distance(self, x, dist, **kwargs):
         # TODO: Add more distance measures
         if dist == "euclidian":
             return self.euclidian(x)
         if dist == "minkowski":
+            if 'p' in kwargs:
+                return self.minkowski(x, p=kwargs['p'])
             return self.minkowski(x)
         if dist == "cosine":
             return self.cosine(x)
@@ -59,8 +61,8 @@ class kNN:
         '''
         q1 = x-self.X
         q2 = np.abs(q1)
-        q3 = np.sum(q2, axis=1)
-        distances = q3
+        distances = np.sum(q2, axis=1)
+        print(f'  distances.shape {distances.shape}  self.y.shape {self.y.shape}')
         return np.stack((distances, self.y), axis=-1)
 
     def cosine(self, x):
@@ -78,13 +80,18 @@ class kNN:
         Mahalanobis distance
         https://en.wikipedia.org/wiki/Mahalanobis_distance
         '''
-        pass
+        if not self.cov_matrix_inv:
+            self.cov_matrix_inv = np.linalg.inv(np.cov(self.X))
+
+        return self.cov_matrix_inv
 
     
     def minkowski(self, x, p=5):
         distances = np.power(np.sum(np.power(
             np.abs(np.subtract(x, self.X)), p), axis=1), 1/p)
+
         return np.stack((distances, self.y), axis=-1)
+
     
     def chebyshev(self, X, Y):
         '''
