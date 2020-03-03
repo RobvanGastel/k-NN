@@ -11,7 +11,7 @@ X_train, y_train = train[:,1:], train[:,0]
 X_test, y_test = test[:,1:], test[:,0]
 
 cls = kNN(X=X_train, y=y_train)
-y_hat = cls.predict(X_train, 'manhattan', LOOCV=False)
+y_hat = cls.predict(X_train, 'euclidian', LOOCV=True)
 
 for i in range(0, 20):
-    print("0/1 loss: ", np.sum(y_hat[:, i] != y_train), "for k: ", i+1)
+    print("0/1 loss: ", np.sum(y_hat[:, i] != y_train), "Risk Estimate" ,np.sum(y_hat[:, i] != y_train)/3000,  "for k: ", i+1)
