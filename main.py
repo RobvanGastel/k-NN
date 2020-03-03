@@ -14,4 +14,4 @@ cls = kNN(X=X_train, y=y_train)
 y_hat = cls.predict(X_train, 'minkowski', LOOCV=False, p=5) # minkowski: param int p
 
 for i in range(0, 20):
-    print("0/1 loss: ", np.sum(y_hat[:, i] != y_train), "for k: ", i+1)
+    print("0/1 loss: ", np.sum(y_hat[:, i] != y_train), "Risk estimate", np.sum(y_hat[:, i] != y_train)/3000 "for k: ", i+1)
