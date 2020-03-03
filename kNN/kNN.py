@@ -13,7 +13,6 @@ class kNN:
 
         for i, x_input in enumerate(X_input):
             distances = self.distance(x_input, dist)
-
             # Order distance by closest elements
             neighbors = sorted(distances, key=lambda x: x[0])
 
@@ -54,8 +53,8 @@ class kNN:
         '''
         distances = []
         for _, x_i in enumerate(self.X):
-            distances.append(np.dot(x, x_i) / np.linalg.norm(x_i) * np.linalg.norm(x))
-        return distances
+            distances.append(1- (np.dot(x, x_i) / np.linalg.norm(x_i) * np.linalg.norm(x)))
+        return np.stack((distances, self.y), axis=-1)
 
     def mahalanobis(self, X, Y):
         '''
