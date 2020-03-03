@@ -14,7 +14,6 @@ class kNN:
 
         for i, x_input in enumerate(X_input):
             distances = self.distance(x_input, dist)
-
             # Order distance by closest elements
             neighbors = sorted(distances, key=lambda x: x[0])
 
@@ -57,8 +56,13 @@ class kNN:
         return np.stack((distances, self.y), axis=-1)
 
     def cosine(self, x):
-        distances = np.divide(np.sum(np.multiply(x, self.X), axis=1),
-                              np.sqrt(np.multiply(np.sum(np.power(x, 2), axis=1), np.sum(np.power(self.X, 2), axis=1))))
+        '''
+        Cosine similarity
+        https://en.wikipedia.org/wiki/Cosine_similarity
+        '''
+        distances = []
+        for _, x_i in enumerate(self.X):
+            distances.append(1- (np.dot(x, x_i) / np.linalg.norm(x_i) * np.linalg.norm(x)))
         return np.stack((distances, self.y), axis=-1)
 
     def mahalanobis(self, x):
