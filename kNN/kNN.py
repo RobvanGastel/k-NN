@@ -48,9 +48,14 @@ class kNN:
         return np.sum(np.abs(X-Y))
 
     def cosine(self, x):
-        distances = np.divide(np.sum(np.multiply(x, self.X), axis=1),
-                              np.sqrt(np.multiply(np.sum(np.power(x, 2), axis=1), np.sum(np.power(self.X, 2), axis=1))))
-        return np.stack((distances, self.y), axis=-1)
+        '''
+        Cosine similarity
+        https://en.wikipedia.org/wiki/Cosine_similarity
+        '''
+        distances = []
+        for _, x_i in enumerate(self.X):
+            distances.append(np.dot(x, x_i) / np.linalg.norm(x_i) * np.linalg.norm(x))
+        return distances
 
     def mahalanobis(self, X, Y):
         '''
