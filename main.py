@@ -12,7 +12,7 @@ X_train, y_train = train[:,1:], train[:,0]
 X_test, y_test = test[:,1:], test[:,0]
 
 cls = kNN(X=X_train, y=y_train)
-y_hat = cls.predict(X_test, 'euclidian')
+y_hat = cls.predict(X_test, 'minkowski', p=5) # minkowski: param int p
 
 
 for i in range(0, 20):
