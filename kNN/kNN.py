@@ -10,7 +10,7 @@ class kNN:
         self.n_classes = len(list(set(self.y)))
         self.cov_matrix = None
 
-    def predict(self, X_input, dist, k_range=range(1, 21), predict_on_train=False):
+    def predict(self, X_input, dist, k_range=range(1, 21), LOOCV=False):
         print(f'start predict {dist}')
         start_predict = process_time()
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
@@ -21,7 +21,7 @@ class kNN:
             neighbors = sorted(distances, key=lambda x: x[0])
 
             for k in k_range:
-                k_neighbors = neighbors[int(predict_on_train) : k + int(predict_on_train)]
+                k_neighbors = neighbors[int(LOOCV) : k + int(LOOCV)]
                 y_hat[i][k-1] = self.__majority_vote(k_neighbors)
             
             if i % 10 == 0:
