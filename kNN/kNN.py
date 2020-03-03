@@ -29,6 +29,8 @@ class kNN:
             return self.euclidian(x)
         if dist == "minkowski":
             return self.minkowski(x)
+        if dist == "cosine":
+            return self.cosine(x)
 
     def euclidian(self, x):
         '''Euclidian distance
@@ -45,12 +47,10 @@ class kNN:
         '''
         return np.sum(np.abs(X-Y))
 
-    def cosine(self, X, Y):
-        '''
-        Cosine similarity
-        https://en.wikipedia.org/wiki/Cosine_similarity
-        '''
-        pass
+    def cosine(self, x):
+        distances = np.divide(np.sum(np.multiply(x, self.X), axis=1),
+                              np.sqrt(np.multiply(np.sum(np.power(x, 2), axis=1), np.sum(np.power(self.X, 2), axis=1))))
+        return np.stack((distances, self.y), axis=-1)
 
     def mahalanobis(self, X, Y):
         '''
