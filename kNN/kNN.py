@@ -1,4 +1,5 @@
 import numpy as np
+from time import process_time
 
 class kNN:
 
@@ -10,6 +11,8 @@ class kNN:
         self.cov_matrix = None
 
     def predict(self, X_input, dist, k_range=range(1, 21), predict_on_train=False):
+        print(f'start predict {dist}')
+        start_predict = process_time()
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
         for i, x_input in enumerate(X_input):
@@ -20,6 +23,11 @@ class kNN:
             for k in k_range:
                 k_neighbors = neighbors[int(predict_on_train) : k + int(predict_on_train)]
                 y_hat[i][k-1] = self.__majority_vote(k_neighbors)
+            
+            if i % 10 == 0:
+                print(f'{i}/{len(X_input)}', end='\r')
+
+        print("predict processing time: %.2f seconds" % (process_time() - start_predict))
 
         return y_hat
 
