@@ -8,7 +8,7 @@ class kNN:
         self.y = y
         self.n_classes = len(list(set(self.y)))
 
-    def predict(self, X_input, k_range=range(1, 21), dist):
+    def predict(self, X_input, dist, k_range=range(1, 21)):
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
         for i in range(0, len(X_input)):
@@ -71,6 +71,10 @@ class kNN:
         https://iq.opengenus.org/chebyshev-distance/
         '''
         pass
+
+    def chi_square (self, X, Y):
+        pass
+
 
     def __majority_vote(self, neighbors):
         '''Majority vote for the k nearest neighbors chosen
