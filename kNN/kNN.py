@@ -11,8 +11,8 @@ class kNN:
     def predict(self, X_input, dist, k_range=range(1, 21)):
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
-        for i in range(0, len(X_input)):
-            distances = self.distance(X_input[i], dist)
+        for i, x_input in enumerate(X_input):
+            distances = self.distance(x_input, dist)
 
             # Order distance by closest elements
             neighbors = sorted(distances, key=lambda x: x[0])
