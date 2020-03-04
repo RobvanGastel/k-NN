@@ -1,6 +1,7 @@
 import numpy as np
 from datetime import datetime
 from kNN.kNN import kNN
+from sklearn.decomposition import PCA
 
 def write_results(data, dist, train=False):
     filename = ""
@@ -42,4 +43,3 @@ for dist in distances:
     write_results(data_test, dist, train=False)
     write_results(data_train, dist, train=True)
 
-            
