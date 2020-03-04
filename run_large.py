@@ -32,7 +32,7 @@ for dist in distances:
         data_test.append([np.sum(y_hat[:, i] != y_test), i+1])
 
     # Train data
-    y_hat = cls.predict(X_train, dist, LOOCV=False)
+    y_hat = cls.predict(X_train, dist, LOOCV=True)
     for i in range(0, 20):
         data_train.append([np.sum(y_hat[:, i] != y_train), i+1])
 
