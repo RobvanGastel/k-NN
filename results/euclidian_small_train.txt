@@ -1,20 +1,21 @@
-0/1 loss:  0 for k:  1
-0/1 loss:  0 for k:  2
-0/1 loss:  82 for k:  3
-0/1 loss:  81 for k:  4
-0/1 loss:  122 for k:  5
-0/1 loss:  128 for k:  6
-0/1 loss:  154 for k:  7
-0/1 loss:  160 for k:  8
-0/1 loss:  187 for k:  9
-0/1 loss:  188 for k:  10
-0/1 loss:  212 for k:  11
-0/1 loss:  211 for k:  12
-0/1 loss:  226 for k:  13
-0/1 loss:  220 for k:  14
-0/1 loss:  241 for k:  15
-0/1 loss:  242 for k:  16
-0/1 loss:  253 for k:  17
-0/1 loss:  249 for k:  18
-0/1 loss:  254 for k:  19
-0/1 loss:  257 for k:  20
+0/1 loss,k
+0,1
+0,2
+82,3
+81,4
+122,5
+128,6
+154,7
+160,8
+187,9
+188,10
+212,11
+211,12
+226,13
+220,14
+241,15
+242,16
+253,17
+249,18
+254,19
+257,20

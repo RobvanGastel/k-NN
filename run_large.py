@@ -5,15 +5,15 @@ from kNN.kNN import kNN
 def write_results(data, dist, train=False):
     filename = ""
     if train:
-        filename = r'./results/' + dist + "_small_train.txt"
+        filename = r'./results/' + dist + "_large_train_LOOCV.txt"
     else: 
-        filename = r'./results/' + dist + "_small_test.txt"
+        filename = r'./results/' + dist + "_large_test_LOOCV.txt"
     np.savetxt(filename, data, delimiter=",", fmt='%s')	
 
 # train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')[:250]
 # test = np.loadtxt(r'./data/MNIST_test_small.csv', delimiter=',')[:150]
-train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')
-test = np.loadtxt(r'./data/MNIST_test_small.csv', delimiter=',')
+train = np.loadtxt(r'./data/MNIST_train.csv', delimiter=',')
+test = np.loadtxt(r'./data/MNIST_test.csv', delimiter=',')
 # print(f'train shape {train.shape}\ntest shape {test.shape}')
 
 X_train, y_train = train[:,1:], train[:,0]
