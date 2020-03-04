@@ -6,9 +6,9 @@ from sklearn.decomposition import PCA
 def write_results(data, dist, train=False):
     filename = ""
     if train:
-        filename = r'./results/' + dist + "_small_train.txt"
+        filename = r'./results/' + dist + "_large_train_LOOCV.txt"
     else: 
-        filename = r'./results/' + dist + "_small_test.txt"
+        filename = r'./results/' + dist + "_large_test_LOOCV.txt"
     np.savetxt(filename, data, delimiter=",", fmt='%s')	
 
 # train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')[:250]
