@@ -13,17 +13,19 @@ def write_results(data, dist, train=False):
 
 # train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')[:250]
 # test = np.loadtxt(r'./data/MNIST_test_small.csv', delimiter=',')[:150]
-train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')
 test = np.loadtxt(r'./data/MNIST_test_small.csv', delimiter=',')
 print(f'train shape {train.shape}\ntest shape {test.shape}')
 
 X_train, y_train = train[:,1:], train[:,0]
 X_test, y_test = test[:,1:], test[:,0]
 
-distances = ['minkowski']
+train_set = ['./data/train_3.csv', './data/train_4.csv', './data/train_5.csv', 
+             './data/train_6.csv', './data/train_7.csv', './data/train_8.csv', 
+             './data/train_9.csv', './data/train_10.csv']
 
-for dist in distances:
-    cls = kNN(X=X_train, y=y_train)
+for t_set in train_set:
+    train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')
+    cls = kNN(X=t_set, y=y_train)
 
     data_test = [["0/1 loss", "k", "p"]]
     data_train = [["0/1 loss", "k", "p"]]
