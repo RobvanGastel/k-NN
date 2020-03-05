@@ -17,7 +17,7 @@ class kNN:
         y_hat = np.empty(shape=(X_input.shape[0], max(k_range)))
 
         for i, x_input in enumerate(tqdm(X_input)):
-            distances = self.get_distance(x_input, dist, kwargs=kwargs)
+            distances = self.get_distance(x_input, dist, kwargs)
             # Order distance by closest elements
             neighbors = sorted(distances, key=lambda x: x[0])
 
@@ -28,14 +28,14 @@ class kNN:
         print("predict processing time: %.2f seconds" % (process_time() - start_predict))
         return y_hat
 
-    def get_distance(self, x, dist, **kwargs):
+    def get_distance(self, x, dist, kwargs):
         # TODO: Add more distance measures
         if dist == "euclidian":
             return self.euclidian(x)
         if dist == "minkowski":
             if 'p' in kwargs:
                 return self.minkowski(x, p=kwargs['p'])
-            return self.minkowski(x)
+            raise "input 'p' value"
         if dist == "cosine":
             return self.cosine(x)
         if dist == 'manhattan':
@@ -83,7 +83,7 @@ class kNN:
         return self.cov_matrix_inv
 
     
-    def minkowski(self, x, p=5):
+    def minkowski(self, x, p):
         distances = np.power(np.sum(np.power(
             np.abs(np.subtract(x, self.X)), p), axis=1), 1/p)
 
