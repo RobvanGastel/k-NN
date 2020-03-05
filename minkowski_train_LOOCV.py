@@ -32,7 +32,7 @@ while True:
     if last_index == int(len(X_train)):
         print('DONE!')
         break
-    print('last_index', last_index)
+    print('last_index', last_index, '/', len(X_train))
 
     y_hat = cls.predict(
         X_train[last_index+1:last_index+101, :],
