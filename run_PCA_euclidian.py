@@ -19,9 +19,7 @@ test = np.loadtxt(r'./data/MNIST_test_small.csv', delimiter=',')
 X_train, y_train = train[:,1:], train[:,0]
 X_test, y_test = test[:,1:], test[:,0]
 
-train_set = ['./data/train_2.csv', './data/train_3.csv', './data/train_4.csv', './data/train_5.csv', 
-             './data/train_6.csv', './data/train_7.csv', './data/train_8.csv', 
-             './data/train_9.csv', './data/train_10.csv']
+train_set = ['./data/train_1.csv']
 dist = "euclidian"
  
 for j, t_set in enumerate(train_set):
