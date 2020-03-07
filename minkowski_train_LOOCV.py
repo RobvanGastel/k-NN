@@ -29,7 +29,7 @@ while True:
         last_index = int(0)
     else:
         last_index = int(info[-1][0])
-    if last_index == int(len(X_train)):
+    if last_index == 21_000:
         print('DONE!')
         break
     print('last_index', last_index, '/', len(X_train))
