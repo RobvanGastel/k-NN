@@ -30,8 +30,8 @@ class kNN:
 
     def get_distance(self, x, dist, kwargs):
         # TODO: Add more distance measures
-        if dist == "euclidian":
-            return self.euclidian(x)
+        if dist == "euclidean":
+            return self.euclidean(x)
         if dist == "minkowski":
             if 'p' in kwargs:
                 return self.minkowski(x, p=kwargs['p'])
@@ -55,8 +55,8 @@ class kNN:
             if int(n[1]) in indices:
                 return n[1]
 
-    def euclidian(self, x):
-        '''Euclidian distance
+    def euclidean(self, x):
+        '''Euclidean distance
         '''
         distances = np.sqrt(np.sum(np.power(
             np.subtract(x, self.X), 2), axis=1))

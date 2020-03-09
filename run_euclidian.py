@@ -16,7 +16,7 @@ test = np.loadtxt(r'./data/MNIST_test_small.csv', delimiter=',')
 X_train, y_train = train[:,1:], train[:,0]
 X_test, y_test = test[:,1:], test[:,0]
 
-distances = ['euclidian']
+distances = ['euclidean']
 
 for dist in distances:
     cls = kNN(X=X_train, y=y_train)
