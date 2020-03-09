@@ -9,7 +9,6 @@ class kNN:
         self.X = X
         self.y = y
         self.n_classes = len(list(set(self.y)))
-        self.cov_matrix_inv = None
 
     def predict(self, X_input, dist, k_range=range(1, 21), LOOCV=False, **kwargs):
         print(f'start predict {dist}')
