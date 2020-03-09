@@ -1,7 +1,6 @@
 import numpy as np
 from datetime import datetime
 from kNN.kNN import kNN
-from sklearn.decomposition import PCA
 
 def write_results(data, dist, train=False):
     filename = ""
@@ -11,8 +10,6 @@ def write_results(data, dist, train=False):
         filename = r'./results/' + dist + "_small_test.txt"
     np.savetxt(filename, data, delimiter=",", fmt='%s')	
 
-# train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')[:250]
-# test = np.loadtxt(r'./data/MNIST_test_small.csv', delimiter=',')[:150]
 train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')
 test = np.loadtxt(r'./data/MNIST_test_small.csv', delimiter=',')
 print(f'train shape {train.shape}\ntest shape {test.shape}')

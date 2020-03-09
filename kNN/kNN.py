@@ -43,64 +43,6 @@ class kNN:
         if dist == "mahalanobis":
             return self.mahalanobis(x)
 
-    def euclidian(self, x):
-        '''Euclidian distance
-        '''
-        distances = np.sqrt(np.sum(np.power(
-            np.subtract(x, self.X), 2), axis=1))
-        return np.stack((distances, self.y), axis=-1)
-
-
-    def manhattan(self, x):
-        '''
-        Manhattan distance
-        https://en.wikipedia.org/wiki/Taxicab_geometry
-        '''
-        q1 = x-self.X
-        q2 = np.abs(q1)
-        distances = np.sum(q2, axis=1)
-        # print(f'  distances.shape {distances.shape}  self.y.shape {self.y.shape}')
-        return np.stack((distances, self.y), axis=-1)
-
-    def cosine(self, x):
-        '''
-        Cosine similarity
-        https://en.wikipedia.org/wiki/Cosine_similarity
-        '''
-        distances = []
-        for _, x_i in enumerate(self.X):
-            distances.append(1- (np.dot(x, x_i) / np.linalg.norm(x_i) * np.linalg.norm(x)))
-        return np.stack((distances, self.y), axis=-1)
-
-    def mahalanobis(self, x):
-        '''
-        Mahalanobis distance
-        https://en.wikipedia.org/wiki/Mahalanobis_distance
-        '''
-        if not self.cov_matrix_inv:
-            self.cov_matrix_inv = np.linalg.inv(np.cov(self.X))
-
-        return self.cov_matrix_inv
-
-    
-    def minkowski(self, x, p):
-        distances = np.power(np.sum(np.power(
-            np.abs(np.subtract(x, self.X)), p), axis=1), 1/p)
-
-        return np.stack((distances, self.y), axis=-1)
-
-    
-    def chebyshev(self, X, Y):
-        '''
-        Chebyshev distance
-        https://iq.opengenus.org/chebyshev-distance/
-        '''
-        pass
-
-    def chi_square (self, X, Y):
-        pass
-
-
     def __majority_vote(self, neighbors):
         '''Majority vote for the k nearest neighbors chosen
         '''
@@ -114,3 +56,33 @@ class kNN:
         for n in neighbors:
             if int(n[1]) in indices:
                 return n[1]
+
+    def euclidian(self, x):
+        '''Euclidian distance
+        '''
+        distances = np.sqrt(np.sum(np.power(
+            np.subtract(x, self.X), 2), axis=1))
+        return np.stack((distances, self.y), axis=-1)
+
+
+    def manhattan(self, x):
+        '''Manhattan distance
+        '''
+        q1 = x-self.X
+        q2 = np.abs(q1)
+        distances = np.sum(q2, axis=1)
+        return np.stack((distances, self.y), axis=-1)
+
+    def cosine(self, x):
+        '''Cosine similarity
+        '''
+        distances = []
+        for _, x_i in enumerate(self.X):
+            distances.append(1- (np.dot(x, x_i) / np.linalg.norm(x_i) * np.linalg.norm(x)))
+        return np.stack((distances, self.y), axis=-1)
+    
+    def minkowski(self, x, p):
+        distances = np.power(np.sum(np.power(
+            np.abs(np.subtract(x, self.X)), p), axis=1), 1/p)
+
+        return np.stack((distances, self.y), axis=-1)

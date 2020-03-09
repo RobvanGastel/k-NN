@@ -18,7 +18,6 @@ def write_results(data, dist, small, train, LOOCV):
     np.savetxt(f'./results/QE/{filename}.txt', data, delimiter=",", fmt='%s')	
 
 train = np.loadtxt(r'./data/MNIST_train.csv', delimiter=',')
-# train = np.loadtxt(r'./data/MNIST_train_small.csv', delimiter=',')[:500]
 
 X_train, y_train = train[:,1:], train[:,0]
 
