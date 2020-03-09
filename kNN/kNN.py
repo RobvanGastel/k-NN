@@ -40,8 +40,6 @@ class kNN:
             return self.cosine(x)
         if dist == 'manhattan':
             return self.manhattan(x)
-        if dist == "mahalanobis":
-            return self.mahalanobis(x)
 
     def __majority_vote(self, neighbors):
         '''Majority vote for the k nearest neighbors chosen
